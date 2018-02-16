@@ -9,6 +9,13 @@ dependencies {
     compile 'com.google.guava:guava:23.0'
 
     testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
 }
 
-mainClassName = 'App'
+mainClassName = 'com.romanmarkunas.loan.LoanCalculator'
+
+run {
+    if (hasProperty('file') && hasProperty('amount')) {
+        args = [file, amount]
+    }
+}
