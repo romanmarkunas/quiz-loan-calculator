@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,9 +22,22 @@ public class LoanCalculator {
                             Float.parseFloat(values[1]),
                             Integer.parseInt(values[2]));
                 })
-                .sorted()
                 .collect(toList());
 
-        lenderList.forEach(l -> System.out.println(l.getRate()));
+        // TODO also add amount validation
+        // TODO add tests for loan
+        Optional<Loan> possibleLoan = Loan.forAmount(loanAmount, lenderList);
+        if (!possibleLoan.isPresent()) {
+            System.out.println(String.format("Unable to lend %s", loanAmount));
+            return;
+        }
+
+        Loan loan = possibleLoan.get();
+
+        // TODO - calculate moneys.
+        // simplest solution is to make repayments go into each lender
+        // proportional to share, but that would not yield best rate
+        // Most expensive loans must be repaid first. The challenge is to
+        // normalize repayment in this conditions
     }
 }
