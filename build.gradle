@@ -15,7 +15,7 @@ dependencies {
 mainClassName = 'com.romanmarkunas.loan.LoanCalculator'
 
 run {
-    if (hasProperty('file') && hasProperty('amount')) {
+    if (project.hasProperty('file') && project.hasProperty('amount')) {
         args = [file, amount]
     }
 }
