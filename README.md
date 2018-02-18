@@ -5,7 +5,7 @@ lenders.
 ### Usage
 Checkout git repo:
 ```
-git checkout ...
+git clone ...
 cd quiz-loan-calculator
 ```
 
