@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
@@ -11,6 +12,7 @@ import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -48,6 +50,27 @@ public class LoanTest {
                 .collect(Collectors.toList());
 
         assertEquals(50, testLoanLenders.get(0).getAmount());
+    }
+
+    @Test
+    public void cheapest_emptyOptional_lendersDoesNotHaveEnoughMoney() {
+        Lender l1 = lenderMock(0.01f, 1000);
+        Lender l2 = lenderMock(0.01f, 1000);
+        List<Lender> lenders = asList(l1, l2);
+
+        Optional<Loan> loanOptional = Loan.cheapest(2001, lenders, 12);
+
+        assertFalse(loanOptional.isPresent());
+    }
+
+    @Test
+    public void getAmount_returnsSameAsPassedToBuilder() {
+        int amount = 37649;
+        Lender l = lenderMock(0.0f, 1_000_000);
+
+        Loan testLoan = Loan.cheapest(amount, asList(l), 12).get();
+
+        assertEquals(amount, testLoan.getAmount());
     }
 
     @Test(expected = IllegalArgumentException.class)
