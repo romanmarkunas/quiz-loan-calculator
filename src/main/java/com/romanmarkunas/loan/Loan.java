@@ -38,10 +38,10 @@ public class Loan {
      * borrower better total rate.
      *
      * Implementation uses guess logic for simplicity. There is a way to solve
-     * it using equation systems, but is less readable and simple solution
-     * with binary approximation gives good enough performance for test sake.
-     * For more on calculation specifics, see {@link #repaymentDurationMonths}
-     * javadoc
+     * it using Newton's method or equation systems, but is less readable and
+     * simple solution with binary approximation gives good enough performance
+     * for test sake. For more on calculation specifics, see
+     * {@link #repaymentDurationMonths} javadoc
      */
     public float getMonthlyRepayment() {
         if (Float.isNaN(this.monthlyRepayment)) {
@@ -53,6 +53,32 @@ public class Loan {
 
     public float getTotalRepayment() {
         return getMonthlyRepayment() * this.durationMonth;
+    }
+
+    public float getRate() {
+        float rate;
+        float lessThanRate = 0.0f;
+        float moreThanRate = 1.0f;
+
+        while (true) {
+            rate = (lessThanRate + moreThanRate) / 2;
+            float monthlyPayment = (float)(
+                    rate * getAmount() /
+                    (1 - Math.pow(1 + rate, -1 * this.durationMonth)));
+
+            if (monthlyPayment < getMonthlyRepayment()) {
+                lessThanRate = rate;
+            }
+            else {
+                moreThanRate = rate;
+            }
+
+            if (Math.abs(monthlyPayment - getMonthlyRepayment()) < 0.001) {
+                break;
+            }
+        }
+
+        return rate * 12;
     }
 
 

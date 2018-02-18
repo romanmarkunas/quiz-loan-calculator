@@ -112,6 +112,20 @@ public class LoanTest {
         assertEquals(months * monthlyPayment, testLoan.getTotalRepayment(), 0.01f);
     }
 
+    @Test
+    public void getRate_calculationCorrespondsToTheoretical() {
+        float monthlyRepayment = 30.88f;
+        int requestedAmount = 1000;
+        Lender l = lenderMock(0.0f, 1000);
+
+        Loan testLoan = spy(Loan.cheapest(100, asList(l), 36).get());
+        doReturn(requestedAmount).when(testLoan).getAmount();
+        doReturn(monthlyRepayment).when(testLoan).getMonthlyRepayment();
+
+        assertEquals(0.07f, testLoan.getRate(), 0.01f);
+    }
+
+
     private Lender lenderMock(float rate, int amount) {
         Lender mock = mock(Lender.class);
         when(mock.getAmount()).thenReturn(amount);
