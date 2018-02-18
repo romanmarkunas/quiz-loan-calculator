@@ -21,3 +21,13 @@ run {
         args = [file, amount]
     }
 }
+
+jar {
+    from {configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': "$mainClassName"
+        )
+    }
+}
