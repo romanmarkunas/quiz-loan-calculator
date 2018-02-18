@@ -34,7 +34,7 @@ public class Loan {
 
     /**
      * This repayment assumes that, for the benefit of customer, their's first
-     * payments come toward to repay lender with highest rate. This gives
+     * payments come toward to repay lender with highest r  ate. This gives
      * borrower better total rate.
      *
      * Implementation uses guess logic for simplicity. There is a way to solve

@@ -15,7 +15,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 public class LoanTest {
@@ -96,9 +98,19 @@ public class LoanTest {
 
         Loan testLoan = Loan.cheapest(2000, lenders, 20).get();
 
-        assertEquals(105.616f, testLoan.getMonthlyRepayment(), 0.001f);
+        assertEquals(105.62f, testLoan.getMonthlyRepayment(), 0.01f);
     }
 
+    @Test
+    public void getTotalRepayments() {
+        int months = 25;
+        float monthlyPayment = 100.0f;
+        Lender l = lenderMock(0.0f, 1000);
+        Loan testLoan = spy(Loan.cheapest(0, asList(l), months).get());
+        doReturn(monthlyPayment).when(testLoan).getMonthlyRepayment();
+
+        assertEquals(months * monthlyPayment, testLoan.getTotalRepayment(), 0.01f);
+    }
 
     private Lender lenderMock(float rate, int amount) {
         Lender mock = mock(Lender.class);
