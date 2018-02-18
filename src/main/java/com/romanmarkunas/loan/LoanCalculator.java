@@ -26,7 +26,7 @@ public class LoanCalculator {
 
         // TODO also add amount validation
         // TODO add tests for loan
-        Optional<Loan> possibleLoan = Loan.forAmount(loanAmount, lenderList);
+        Optional<Loan> possibleLoan = Loan.cheapest(loanAmount, lenderList, 36);
         if (!possibleLoan.isPresent()) {
             System.out.println(String.format("Unable to lend %s", loanAmount));
             return;
