@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
@@ -49,9 +50,19 @@ public class LoanTest {
         assertEquals(50, testLoanLenders.get(0).getAmount());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void cheapest_throws_amountIsNegative() {
-        
+        Loan.cheapest(-100, emptyList(), 12);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cheapest_throws_monthsIsNegative() {
+        Loan.cheapest(100, emptyList(), -12);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void cheapest_throws_lendersListIsNull() {
+        Loan.cheapest(100, null, 12);
     }
 
     @Test

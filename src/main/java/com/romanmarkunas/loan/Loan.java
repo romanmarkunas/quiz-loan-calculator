@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class Loan {
 
     private final List<Lender> lenders;
@@ -94,6 +97,7 @@ public class Loan {
 
 
     public static Optional<Loan> cheapest(int amount, List<Lender> lenders, int months) {
+        validateArgs(amount, lenders, months);
         List<Lender> bestLendersForLoan = new ArrayList<>();
         Collections.sort(lenders);
         int total = 0;
@@ -115,5 +119,17 @@ public class Loan {
         }
 
         return Optional.empty();
+    }
+
+    private static void validateArgs(int amount, List<Lender> lenders, int months) {
+        notNegative(amount, "Loan amount");
+        notNegative(months, "Loan duration");
+        checkNotNull(lenders, "Lender list must not be null!");
+    }
+
+    private static void notNegative(int arg, String name) {
+        checkArgument(
+                arg >= 0,
+                String.format("%s must not be negative!", name));
     }
 }
