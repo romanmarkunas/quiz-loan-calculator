@@ -25,7 +25,6 @@ public class LoanCalculator {
                 .collect(toList());
 
         // TODO also add amount validation
-        // TODO add tests for loan
         Optional<Loan> possibleLoan = Loan.cheapest(loanAmount, lenderList, 36);
         if (!possibleLoan.isPresent()) {
             System.out.println(String.format("Unable to lend %s", loanAmount));
@@ -33,11 +32,14 @@ public class LoanCalculator {
         }
 
         Loan loan = possibleLoan.get();
-
-        // TODO - calculate moneys.
-        // simplest solution is to make repayments go into each lender
-        // proportional to share, but that would not yield best rate
-        // Most expensive loans must be repaid first. The challenge is to
-        // normalize repayment in this conditions
+        System.out.println(String.format(
+                "Requested amount: £%d \n" +
+                "Rate: %.1f%%\n" +
+                "Monthly repayment: £%.2f\n" +
+                "Total repayment: £%.2f\n",
+                loan.getAmount(),
+                loan.getRate() * 100,
+                loan.getMonthlyRepayment(),
+                loan.getTotalRepayment()));
     }
 }
