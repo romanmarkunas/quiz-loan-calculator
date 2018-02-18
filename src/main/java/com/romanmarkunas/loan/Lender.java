@@ -23,7 +23,7 @@ public class Lender implements Comparable<Lender> {
 
     @Override
     public int compareTo(Lender other) {
-        float difference = this.rate - other.rate;
+        float difference = this.getRate() - other.getRate();
         if (Math.abs(difference) < 0.0001f) {
             return 0;
         }
