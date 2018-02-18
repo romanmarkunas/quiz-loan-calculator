@@ -3,7 +3,13 @@ This program allows to calculate cheapest loan option from multiple
 lenders.
 
 ### Usage
-As a part of Gradle build (if you don't have JRE on your machine):
+Checkout git repo:
+```
+git checkout ...
+cd quiz-loan-calculator
+```
+
+To run as part of Gradle build (if you don't have JRE on your machine):
 
 ```
 ./gradlew run -Pfile=path/to/lender/file.csv -Pamount=1000
