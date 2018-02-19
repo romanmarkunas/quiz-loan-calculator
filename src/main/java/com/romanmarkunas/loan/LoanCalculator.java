@@ -50,9 +50,9 @@ public class LoanCalculator {
     private static void outputLoan(Loan loan) {
         System.out.println(String.format(
                 "Requested amount: £%d \n" +
-                        "Rate: %.1f%%\n" +
-                        "Monthly repayment: £%.2f\n" +
-                        "Total repayment: £%.2f\n",
+                "Rate: %.1f%%\n" +
+                "Monthly repayment: £%.2f\n" +
+                "Total repayment: £%.2f\n",
                 loan.getAmount(),
                 loan.getRate() * 100,
                 loan.getMonthlyRepayment(),
