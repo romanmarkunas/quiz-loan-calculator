@@ -52,7 +52,7 @@ public class LoanCalculator {
                 "Requested amount: £%d \n" +
                 "Rate: %.1f%%\n" +
                 "Monthly repayment: £%.2f\n" +
-                "Total repayment: £%.2f\n",
+                "Total repayment: £%.2f",
                 loan.getAmount(),
                 loan.getRate() * 100,
                 loan.getMonthlyRepayment(),
